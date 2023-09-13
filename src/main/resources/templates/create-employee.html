@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
+  <script type="text/javascript" th:src="@{/js/script.js}"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Employee Registration Form</title>
+  <link rel="icon" type="image/x-icon" href="resources/java.ico"/>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"/>
+  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-sgn">
+
+<!-- navigation bar -->
+<div id="top-page">
+  <nav class="navbar navbar-expand-lg bg-black fixed-top" id="nav-main">
+    <div class="container px-5 px-lg-5">
+      <i class="navbar-brand fa-brands fa-java fa-spin "></i>
+      <a href="http://localhost:8080/" class="navbar-brand cool-navbrand">WFM</a>
+      <i class="navbar-brand fa-brands fa-java fa-spin "></i>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#rps-navbar">
+        <span class="fa fa-list" style="color:green"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="rps-navbar">
+        <ul dir="rtl" class="navbar-nav ms-auto">
+
+
+          <div class="dropdown">
+            <button class="dropbtn nav-item cool-link-mid">
+              <h5 class="px-3"><i class="fa fa-home" aria-hidden="true"></i> Accommodation</h5>
+            </button>
+            <div class="dropdown-content">
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/accommodation/register">
+                <h5 class="px-3"> Create <i
+                        class="fa fa-folder-plus" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/accommodation/get-all">
+                <h5 class="px-3"> Show All <i
+                        class="fa fa-list" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button class="dropbtn nav-item cool-link-mid">
+              <h5 class="px-3"><i class="fa fa-car" aria-hidden="true"></i> Vehicle</h5>
+            </button>
+            <div class="dropdown-content">
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/vehicle/register">
+                <h5 class="px-3"> Create <i
+                        class="fa fa-folder-plus" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/vehicle/get-all">
+                <h5 class="px-3"> Show All <i
+                        class="fa fa-list" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button class="dropbtn nav-item cool-link-mid">
+              <h5 class="px-3"><i class="fa fa-book" aria-hidden="true"></i> Project</h5>
+            </button>
+            <div class="dropdown-content">
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/project/register">
+                <h5 class="px-3"> Create <i
+                        class="fa fa-folder-plus" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/project/get-all">
+                <h5 class="px-3"> Show All <i
+                        class="fa fa-list" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+            </div>
+          </div>
+
+
+          <div class="dropdown">
+            <button class="dropbtn nav-item cool-link-mid">
+              <h5 class="px-3"><i class="fa fa-user-nurse" aria-hidden="true"></i> Employee</h5>
+            </button>
+            <div class="dropdown-content">
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/employee/register">
+                <h5 class="px-3"> Create <i
+                        class="fa fa-folder-plus" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/employee/get-all">
+                <h5 class="px-3"> Show All <i
+                        class="fa fa-list" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+            </div>
+          </div>
+
+
+
+          <div class="dropdown">
+            <button class="dropbtn nav-item cool-link-mid">
+              <h5 class="px-3"> Timesheet</h5>
+            </button>
+            <div class="dropdown-content">
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/timesheet/register">
+                <h5 class="px-3"> Create <i
+                        class="fa fa-folder-plus" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+              <a class="nav-link cool-link-mid" href="http://localhost:8080/timesheet/get-all">
+                <h5 class="px-3"> Show All <i
+                        class="fa fa-list" data-bs-toggle="dropdown" aria-hidden="true"></i></h5>
+              </a>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+<div class="container pt-5 mt-5 mt-lg-5 align-items-center justify-content-center" id="registrationForm">
+  <div class="d-flex justify-content-center">
+    <div class="text-center px-5 py-5 my-5"
+         style="background:linear-gradient(0deg, rgb(82, 67, 90), rgb(71, 80, 104))">
+      <h2 style="color:white">new employee</h2>
+      <form action="#" th:action="@{/employee/register}" method="post" th:object="${employee}">
+        <div class="mb-3 mt-3">
+          <label for="firstName"><h6 style="color:white">First Name</h6></label>
+          <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName"
+                 th:field="*{firstName}">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="lastName"><h6 style="color:white">Last Name</h6></label>
+          <input type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName"
+                 th:field="*{lastName}">
+        </div>
+        <div class="mb-3">
+          <label for="identityNumber"><h6 style="color:white">Identification Number</h6></label>
+          <input type="number" class="form-control" id="identityNumber" placeholder="Identification Number"
+                 name="identityNumber" th:field="*{identityNumber}">
+        </div>
+        <div class="mb-3">
+          <label for="gender"><h6 style="color:white">Gender</h6></label>
+          <select class="form-control custom-select" id="gender"  th:field="*{gender}">
+            <option value="Select Gender" selected>Select Gender</option>
+            <option value="MALE">male</option>
+            <option value="FEMALE">female</option>
+            <option value="OTHER">other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="maritalStatus"><h6 style="color:white">Marital Status</h6></label>
+          <select class="form-control custom-select" id="maritalStatus"  th:field="*{maritalStatus}">
+            <option value="Select Marital Status" selected>Select Marital Status</option>
+            <option value="SINGLE">single</option>
+            <option value="MARRIED">married</option>
+            <option value="DIVORCED">divorced</option>
+            <option value="WIDOWED">widowed</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="nationality"><h6 style="color:white">Nationality</h6></label>
+          <input type="text" class="form-control" id="nationality" placeholder="Enter Nationality"
+                 name="nationality" th:field="*{nationality}">
+        </div>
+
+        <div class="mb-3">
+          <label for="citizenshipCountry"><h6 style="color:white">Citizenship Country</h6></label>
+          <input type="text" class="form-control" id="citizenshipCountry" placeholder="Enter Citizenship Country"
+                 name="citizenshipCountry" th:field="*{citizenshipCountry}">
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth"><h6 style="color:white">Date Of Birth</h6></label>
+          <input type="date" class="form-control" id="dateOfBirth" placeholder="yyyy-mm-dd"
+                 name="dateOfBirth" th:field="*{dateOfBirth}">
+        </div>
+
+        <div class="mb-3">
+          <label for="placeOfBirth"><h6 style="color:white">Place Of Birth</h6></label>
+          <input type="text" class="form-control" id="placeOfBirth" placeholder="Enter Place Of Birth"
+                 name="placeOfBirth" th:field="*{placeOfBirth}">
+        </div>
+
+        <div class="mb-3">
+          <label for="address"><h6 style="color:white">Address</h6></label>
+          <input type="text" class="form-control" id="address" placeholder="Enter Address"
+                 name="address" th:field="*{address}">
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber"><h6 style="color:white">Phone Number</h6></label>
+          <input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number"
+                 name="phoneNumber" th:field="*{phoneNumber}">
+        </div>
+
+        <div class="mb-3 mt-3">
+          <label for="email"><h6 style="color:white">Email</h6></label>
+          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                 th:field="*{email}">
+        </div>
+
+        <div class="mb-3">
+          <label for="bankName"><h6 style="color:white">Bank Name</h6></label>
+          <input type="text" class="form-control" id="bankName" placeholder="Enter Bank Name"
+                 name="bankName" th:field="*{bankName}">
+        </div>
+
+        <div class="mb-3">
+          <label for="bankAccountNumber"><h6 style="color:white">Bank Account Number</h6></label>
+          <input type="number" class="form-control" id="bankAccountNumber" placeholder="Bank Account Number"
+                 name="bankAccountNumber" th:field="*{bankAccountNumber}">
+        </div>
+
+        <div class="mb-3">
+          <label for="contractType"><h6 style="color:white">Contract Type</h6></label>
+          <input type="text" class="form-control" id="contractType" placeholder="Enter Contract Type"
+                 name="contractType" th:field="*{contractType}">
+        </div>
+
+        <label for="salaryPerHour"><h6 style="color:white">salary Per Hour</h6></label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <span class="input-group-text">0.00</span>
+          <input type="number" class="form-control" id="salaryPerHour" placeholder="Salary Per Hour"
+                 name="salaryPerHour" th:field="*{salaryPerHour}">
+        </div>
+
+        <div class="mb-3">
+          <label for="startingDate"><h6 style="color:white">Starting Date</h6></label>
+          <input type="date" class="form-control" id="startingDate" placeholder="yyyy-mm-dd"
+                 name="startingDate" th:field="*{startingDate}">
+        </div>
+
+        <div class="mb-3">
+          <label for="finishingDate"><h6 style="color:white">Finishing Date</h6></label>
+          <input type="date" class="form-control" id="finishingDate" placeholder="yyyy-mm-dd"
+                 name="finishingDate" th:field="*{finishingDate}">
+        </div>
+
+        <div class="form-check mb-3">
+          <label class="form-check-label">
+            <input class="form-check-input mb-3 " id="hasDriversLicense" type="checkbox"
+                   name="hasDriversLicense" th:field="*{hasDriversLicense}"><h6
+                  style="color:white">I have an active drivers license</h6>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-grey"><h6 style="letter-spacing: 0;">submit</h6></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<section class="contact-section bg-black">
+  <div class="container">
+    <div class="row">
+      <div class="col mt-5 mb-5">
+        <div class="card py-3 h-60">
+          <div class="card-body text-center">
+            <a href="https://telegram.me/Lqrock" style="color:black;">
+              <i class="fa-brands fa-telegram" style="font-size:xx-large;" aria-hidden="true"></i>
+            </a>
+            <a href="https://telegram.me/Lqrock" style="color:black; font-size: 20px;"><p>Telegram</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="col mt-5 mb-5">
+        <div class="card py-3 h-60">
+          <div class="card-body text-center">
+            <a href="mailto:Siavash.Azarnia@Gmail.com" style="color:black;">
+              <i class="fa fa-envelope" style="font-size:xx-large;" aria-hidden="true"></i>
+            </a>
+            <a href="mailto:Siavash.Azarnia@Gmail.com" style="color:black; font-size: 20px;"><p>Email
+              Address</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="col mt-5 mb-5">
+        <div class="card py-3 h-60">
+          <div class="card-body text-center">
+            <a href="https://www.linkedin.com/in/siavash-azarnia-73b6b0232/" style="color:black;">
+              <i class="fa-brands fa-linkedin" style="font-size:xx-large;" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/siavash-azarnia-73b6b0232/"
+               style="color:black; font-size: 20px;"><p>LinkedIn</p></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer bg-black small text-center text-white pb-5" id="contactUs">
+  <div class="container px-4 px-lg-5">Copyright &copy; Lqrock</div>
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+package com.temporary.workforce.management.controller;
+
+import com.temporary.workforce.management.dto.EmailDTO;
+import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("email")
+public class EmailController {
+
+    @Autowired
+    EmailService emailService;
+
+    @PostMapping("/create")
+    public ResponseEntity<EmailDTO> createEmail(@RequestBody EmailDTO emailDTO) {
+        emailService.createEmail(emailDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<EmailDTO> updateEmail(@RequestBody EmailDTO emailDTO) throws BusinessException {
+        emailService.updateEmail(emailDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{emailId}")
+    public ResponseEntity<EmailDTO> deleteEmail(@PathVariable int emailId) throws BusinessException {
+        emailService.deleteEmail(emailId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/get/{emailId}")
+    public ResponseEntity<EmailDTO> getEmail(@PathVariable int emailId) throws BusinessException {
+        return new ResponseEntity<>(emailService.getEmailDTO(emailId), HttpStatus.OK);
+    }
+
+
+}
