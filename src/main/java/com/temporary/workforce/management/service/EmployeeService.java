@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.EmployeeDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Employee;
 import com.temporary.workforce.management.repository.EmployeeRepository;
 import com.temporary.workforce.management.repository.JobPositionRepository;
@@ -77,7 +77,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     }
 
     @Override
-    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) throws BusinessException {
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) throws EntityNotFoundException {
 
         logger.info("Updating employee {}", employeeDTO.getId());
         Optional<Employee> existingEmployeeOpt = employeeRepository.findById(employeeDTO.getId());
@@ -115,7 +115,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     }
 
     @Override
-    public void deleteEmployee(int employeeId) throws BusinessException {
+    public void deleteEmployee(int employeeId) throws EntityNotFoundException {
         logger.info("Deleting employee");
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         throwExceptionIfEmployeeNotFound(employee, employeeId);
@@ -124,7 +124,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     }
 
     @Override
-    public EmployeeDTO getEmployeeDTO(int employeeId) throws BusinessException {
+    public EmployeeDTO getEmployeeDTO(int employeeId) throws EntityNotFoundException {
         logger.info("Retrieving employeeDTO");
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         throwExceptionIfEmployeeNotFound(employee, employeeId);
@@ -132,7 +132,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     }
 
     @Override
-    public Optional<Employee> getEmployee(int employeeId) throws BusinessException {
+    public Optional<Employee> getEmployee(int employeeId) throws EntityNotFoundException {
         logger.info("Retrieving employee");
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         throwExceptionIfEmployeeNotFound(employee, employeeId);
@@ -149,9 +149,9 @@ public class EmployeeService implements EmployeeServiceInterface {
         return employeeDTOList;
     }
 
-    public void throwExceptionIfEmployeeNotFound(Optional<Employee> employee, int employeeId) throws BusinessException {
+    public void throwExceptionIfEmployeeNotFound(Optional<Employee> employee, int employeeId) throws EntityNotFoundException {
         if (employee.isEmpty()) {
-            throw new BusinessException("Employee with ID " + employeeId + " not found");
+            throw new EntityNotFoundException("Employee with ID " + employeeId + " not found");
         }
     }
 

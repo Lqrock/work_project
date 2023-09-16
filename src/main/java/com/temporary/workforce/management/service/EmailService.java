@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.EmailDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Email;
 import com.temporary.workforce.management.repository.EmailRepository;
 import org.modelmapper.ModelMapper;
@@ -29,7 +29,7 @@ public class EmailService implements EmailServiceInterface{
     }
 
     @Override
-    public EmailDTO updateEmail(EmailDTO emailDTO) throws BusinessException {
+    public EmailDTO updateEmail(EmailDTO emailDTO) throws EntityNotFoundException {
         logger.info("Updating email");
         Optional<Email> existingEmailOpt = emailRepository.findById(emailDTO.getId());
         throwExceptionIfEmailNotFound(existingEmailOpt, emailDTO.getId());
@@ -40,7 +40,7 @@ public class EmailService implements EmailServiceInterface{
     }
 
     @Override
-    public void deleteEmail(int emailId) throws BusinessException {
+    public void deleteEmail(int emailId) throws EntityNotFoundException {
         logger.info("Deleting email");
         Optional<Email> email = emailRepository.findById(emailId);
         throwExceptionIfEmailNotFound(email, emailId);
@@ -48,7 +48,7 @@ public class EmailService implements EmailServiceInterface{
     }
 
     @Override
-    public EmailDTO getEmailDTO(int emailId) throws BusinessException {
+    public EmailDTO getEmailDTO(int emailId) throws EntityNotFoundException {
         logger.info("Retrieving email");
         Optional<Email> emailOpt = emailRepository.findById(emailId);
         throwExceptionIfEmailNotFound(emailOpt, emailId);
@@ -57,16 +57,16 @@ public class EmailService implements EmailServiceInterface{
     }
 
     @Override
-    public Optional<Email> getEmail(int emailId) throws BusinessException {
+    public Optional<Email> getEmail(int emailId) throws EntityNotFoundException {
         logger.info("Retrieving email");
         Optional<Email> email = emailRepository.findById(emailId);
         throwExceptionIfEmailNotFound(email, emailId);
         return email;
     }
 
-    private void throwExceptionIfEmailNotFound(Optional<Email> email, int emailId) throws BusinessException {
+    private void throwExceptionIfEmailNotFound(Optional<Email> email, int emailId) throws EntityNotFoundException {
         if(email.isEmpty()){
-            throw new BusinessException("Email with ID " + emailId + " not found!");
+            throw new EntityNotFoundException("Email with ID " + emailId + " not found!");
         }
     }
 

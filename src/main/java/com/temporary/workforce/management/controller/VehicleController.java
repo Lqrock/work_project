@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.VehicleDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,19 +22,19 @@ public class VehicleController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleDTO vehicleDTO) throws BusinessException {
+    public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleDTO vehicleDTO) throws EntityNotFoundException {
         vehicleService.updateVehicle(vehicleDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{vehicleId}")
-    public ResponseEntity<VehicleDTO> deleteVehicle(@PathVariable int vehicleId) throws BusinessException {
+    public ResponseEntity<VehicleDTO> deleteVehicle(@PathVariable int vehicleId) throws EntityNotFoundException {
         vehicleService.deleteVehicle(vehicleId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/get/{vehicleId}")
-    public ResponseEntity<VehicleDTO> getVehicle(@PathVariable int vehicleId) throws BusinessException {
+    public ResponseEntity<VehicleDTO> getVehicle(@PathVariable int vehicleId) throws EntityNotFoundException {
         return new ResponseEntity<>(vehicleService.getVehicleDTO(vehicleId), HttpStatus.OK);
     }
 

@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.PhoneNumberDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.PhoneNumber;
 import com.temporary.workforce.management.repository.PhoneNumberRepository;
 import org.modelmapper.ModelMapper;
@@ -29,7 +29,7 @@ public class PhoneNumberService implements PhoneNumberServiceInterface {
     }
 
     @Override
-    public PhoneNumberDTO updatePhoneNumber(PhoneNumberDTO phoneNumberDTO) throws BusinessException {
+    public PhoneNumberDTO updatePhoneNumber(PhoneNumberDTO phoneNumberDTO) throws EntityNotFoundException {
         logger.info("Updating phone number");
         Optional<PhoneNumber> existingPhoneNumberOpt = phoneNumberRepository.findById(phoneNumberDTO.getId());
         throwExceptionIfPhoneNumberNotFound(existingPhoneNumberOpt, phoneNumberDTO.getId());
@@ -41,7 +41,7 @@ public class PhoneNumberService implements PhoneNumberServiceInterface {
     }
 
     @Override
-    public void deletePhoneNumber(int phoneNumberId) throws BusinessException {
+    public void deletePhoneNumber(int phoneNumberId) throws EntityNotFoundException {
         logger.info("Deleting phone number");
         Optional<PhoneNumber> phoneNumber = phoneNumberRepository.findById(phoneNumberId);
         throwExceptionIfPhoneNumberNotFound(phoneNumber, phoneNumberId);
@@ -50,7 +50,7 @@ public class PhoneNumberService implements PhoneNumberServiceInterface {
     }
 
     @Override
-    public Optional<PhoneNumber> getPhoneNumber(int phoneNumberId) throws BusinessException {
+    public Optional<PhoneNumber> getPhoneNumber(int phoneNumberId) throws EntityNotFoundException {
         logger.info("Retrieving phone number");
         Optional<PhoneNumber> phoneNumber = phoneNumberRepository.findById(phoneNumberId);
         throwExceptionIfPhoneNumberNotFound(phoneNumber, phoneNumberId);
@@ -58,16 +58,16 @@ public class PhoneNumberService implements PhoneNumberServiceInterface {
     }
 
     @Override
-    public PhoneNumberDTO getPhoneNumberDTO(int phoneNumberId) throws BusinessException {
+    public PhoneNumberDTO getPhoneNumberDTO(int phoneNumberId) throws EntityNotFoundException {
         logger.info("Retrieving phone numberDTO");
         Optional<PhoneNumber> phoneNumber = phoneNumberRepository.findById(phoneNumberId);
         throwExceptionIfPhoneNumberNotFound(phoneNumber, phoneNumberId);
         return modelMapper.map(phoneNumber, PhoneNumberDTO.class);
     }
 
-    private void throwExceptionIfPhoneNumberNotFound(Optional<PhoneNumber> phoneNumber, int phoneNumberId) throws BusinessException {
+    private void throwExceptionIfPhoneNumberNotFound(Optional<PhoneNumber> phoneNumber, int phoneNumberId) throws EntityNotFoundException {
         if (phoneNumber.isEmpty()) {
-            throw new BusinessException("Phone Number with ID " + phoneNumberId + " not found.");
+            throw new EntityNotFoundException("Phone Number with ID " + phoneNumberId + " not found.");
         }
     }
 

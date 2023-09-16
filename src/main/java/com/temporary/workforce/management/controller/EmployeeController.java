@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.EmployeeDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,19 +25,19 @@ public class EmployeeController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employeeDTO) throws BusinessException {
+    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employeeDTO) throws EntityNotFoundException {
         employeeService.updateEmployee(employeeDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{employeeId}")
-    public ResponseEntity<EmployeeDTO> deleteEmployee(@PathVariable int employeeId) throws BusinessException {
+    public ResponseEntity<EmployeeDTO> deleteEmployee(@PathVariable int employeeId) throws EntityNotFoundException {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get/{employeeId}")
-    public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable int employeeId) throws BusinessException {
+    public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable int employeeId) throws EntityNotFoundException {
         return new ResponseEntity<>(employeeService.getEmployeeDTO(employeeId), HttpStatus.OK);
     }
 

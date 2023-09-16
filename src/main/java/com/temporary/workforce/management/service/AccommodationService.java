@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.AccommodationDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Accommodation;
 import com.temporary.workforce.management.model.Room;
 import com.temporary.workforce.management.repository.AccommodationRepository;
@@ -54,7 +54,7 @@ public class AccommodationService implements AccommodationServiceInterface {
     }
 
     @Override
-    public AccommodationDTO updateAccommodation(AccommodationDTO accommodationDTO) throws BusinessException {
+    public AccommodationDTO updateAccommodation(AccommodationDTO accommodationDTO) throws EntityNotFoundException {
 
         logger.info("Updating accommodation {}", accommodationDTO.getId());
         Optional<Accommodation> existingAccommodationOpt = accommodationRepository.findById(accommodationDTO.getId());
@@ -78,7 +78,7 @@ public class AccommodationService implements AccommodationServiceInterface {
     }
 
     @Override
-    public void deleteAccommodation(int accommodationId) throws BusinessException {
+    public void deleteAccommodation(int accommodationId) throws EntityNotFoundException {
         logger.info("Deleting accommodation");
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         throwExceptionIfAccommodationNotFound(accommodation, accommodationId);
@@ -87,7 +87,7 @@ public class AccommodationService implements AccommodationServiceInterface {
     }
 
     @Override
-    public AccommodationDTO getAccommodationDTO(int accommodationId) throws BusinessException {
+    public AccommodationDTO getAccommodationDTO(int accommodationId) throws EntityNotFoundException {
         logger.info("Retrieving accommodationDTO");
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         throwExceptionIfAccommodationNotFound(accommodation, accommodationId);
@@ -95,7 +95,7 @@ public class AccommodationService implements AccommodationServiceInterface {
     }
 
     @Override
-    public Optional<Accommodation> getAccommodation(int accommodationId) throws BusinessException {
+    public Optional<Accommodation> getAccommodation(int accommodationId) throws EntityNotFoundException {
         logger.info("Retrieving accommodation");
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         throwExceptionIfAccommodationNotFound(accommodation, accommodationId);
@@ -111,9 +111,10 @@ public class AccommodationService implements AccommodationServiceInterface {
     }
 
 
-    private void throwExceptionIfAccommodationNotFound(Optional<Accommodation> accommodation, int accommodationId) throws BusinessException {
+    private void throwExceptionIfAccommodationNotFound(Optional<Accommodation> accommodation, int accommodationId)
+            throws EntityNotFoundException {
         if (accommodation.isEmpty()) {
-            throw new BusinessException("Accommodation with ID " + accommodationId + " not found.");
+            throw new EntityNotFoundException("Accommodation with ID " + accommodationId + " not found.");
         }
     }
 

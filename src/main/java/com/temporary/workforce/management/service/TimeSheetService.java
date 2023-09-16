@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.TimeSheetDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.TimeSheet;
 import com.temporary.workforce.management.repository.TimeSheetRepository;
 import org.modelmapper.ModelMapper;
@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +36,7 @@ public class TimeSheetService implements TimeSheetServiceInterface {
     }
 
     @Override
-    public TimeSheetDTO updateTimeSheet(TimeSheetDTO timeSheetDTO) throws BusinessException {
+    public TimeSheetDTO updateTimeSheet(TimeSheetDTO timeSheetDTO) throws EntityNotFoundException {
         logger.info("Updating time sheet");
         Optional<TimeSheet> existingTimeSheetOpt = timeSheetRepository.findById(timeSheetDTO.getId());
         throwExceptionIfTimeSheetNotFound(existingTimeSheetOpt, timeSheetDTO.getId());
@@ -55,7 +52,7 @@ public class TimeSheetService implements TimeSheetServiceInterface {
     }
 
     @Override
-    public void deleteTimeSheet(int timeSheetId) throws BusinessException {
+    public void deleteTimeSheet(int timeSheetId) throws EntityNotFoundException {
         logger.info("Deleting time sheet");
         Optional<TimeSheet> timeSheet = timeSheetRepository.findById(timeSheetId);
         throwExceptionIfTimeSheetNotFound(timeSheet, timeSheetId);
@@ -64,7 +61,7 @@ public class TimeSheetService implements TimeSheetServiceInterface {
     }
 
     @Override
-    public TimeSheetDTO getTimeSheetDTO(int timeSheetId) throws BusinessException {
+    public TimeSheetDTO getTimeSheetDTO(int timeSheetId) throws EntityNotFoundException {
         logger.info("Retrieving timeSheetDTO");
         Optional<TimeSheet> timeSheet = timeSheetRepository.findById(timeSheetId);
         throwExceptionIfTimeSheetNotFound(timeSheet, timeSheetId);
@@ -72,7 +69,7 @@ public class TimeSheetService implements TimeSheetServiceInterface {
     }
 
     @Override
-    public Optional<TimeSheet> getTimeSheet(int timeSheetId) throws BusinessException {
+    public Optional<TimeSheet> getTimeSheet(int timeSheetId) throws EntityNotFoundException {
         logger.info("Retrieving time sheet");
         Optional<TimeSheet> timeSheet = timeSheetRepository.findById(timeSheetId);
         throwExceptionIfTimeSheetNotFound(timeSheet, timeSheetId);
@@ -89,9 +86,9 @@ public class TimeSheetService implements TimeSheetServiceInterface {
         return timeSheetDTOList;
     }
 
-    void throwExceptionIfTimeSheetNotFound(Optional<TimeSheet> timeSheet, int timeSheetId) throws BusinessException {
+    void throwExceptionIfTimeSheetNotFound(Optional<TimeSheet> timeSheet, int timeSheetId) throws EntityNotFoundException {
         if (timeSheet.isEmpty()) {
-            throw new BusinessException("Time sheet with id " + timeSheetId + " not found");
+            throw new EntityNotFoundException("Time sheet with id " + timeSheetId + " not found");
         }
     }
 

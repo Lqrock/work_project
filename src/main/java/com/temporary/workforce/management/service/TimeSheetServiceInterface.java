@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.TimeSheetDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.TimeSheet;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ public interface TimeSheetServiceInterface {
 
     void createTimeSheet(TimeSheetDTO timeSheetDTO) throws ParseException;
 
-    TimeSheetDTO updateTimeSheet(TimeSheetDTO timeSheetDTO) throws BusinessException;
+    TimeSheetDTO updateTimeSheet(TimeSheetDTO timeSheetDTO) throws EntityNotFoundException;
 
-    void deleteTimeSheet(int timeSheetId) throws BusinessException;
+    void deleteTimeSheet(int timeSheetId) throws EntityNotFoundException;
 
-    TimeSheetDTO getTimeSheetDTO(int timeSheetId) throws BusinessException;
+    TimeSheetDTO getTimeSheetDTO(int timeSheetId) throws EntityNotFoundException;
 
-    Optional<TimeSheet> getTimeSheet(int timeSheetId) throws BusinessException;
+    Optional<TimeSheet> getTimeSheet(int timeSheetId) throws EntityNotFoundException;
 
     List<TimeSheetDTO> getAllTimeSheets();
 }

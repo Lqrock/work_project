@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.EmailDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,19 +23,19 @@ public class EmailController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<EmailDTO> updateEmail(@RequestBody EmailDTO emailDTO) throws BusinessException {
+    public ResponseEntity<EmailDTO> updateEmail(@RequestBody EmailDTO emailDTO) throws EntityNotFoundException {
         emailService.updateEmail(emailDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{emailId}")
-    public ResponseEntity<EmailDTO> deleteEmail(@PathVariable int emailId) throws BusinessException {
+    public ResponseEntity<EmailDTO> deleteEmail(@PathVariable int emailId) throws EntityNotFoundException {
         emailService.deleteEmail(emailId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get/{emailId}")
-    public ResponseEntity<EmailDTO> getEmail(@PathVariable int emailId) throws BusinessException {
+    public ResponseEntity<EmailDTO> getEmail(@PathVariable int emailId) throws EntityNotFoundException {
         return new ResponseEntity<>(emailService.getEmailDTO(emailId), HttpStatus.OK);
     }
 

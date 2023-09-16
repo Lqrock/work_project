@@ -1,9 +1,7 @@
 package com.temporary.workforce.management.controller;
 
-import com.temporary.workforce.management.dto.EmployeeDTO;
 import com.temporary.workforce.management.dto.TimeSheetDTO;
-import com.temporary.workforce.management.dto.VehicleDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.TimeSheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,18 +27,18 @@ public class TimeSheetController {
     }
 
     @RequestMapping("/update")
-    public ResponseEntity<TimeSheetDTO> updateTimeSheet(@RequestBody TimeSheetDTO timeSheetDTO) throws BusinessException {
+    public ResponseEntity<TimeSheetDTO> updateTimeSheet(@RequestBody TimeSheetDTO timeSheetDTO) throws EntityNotFoundException {
         return new ResponseEntity<>(timeSheetService.updateTimeSheet(timeSheetDTO), HttpStatus.OK);
     }
 
 //    @DeleteMapping("/delete/{timeSheetId}")
-//    public ResponseEntity<TimeSheetDTO> deleteTimeSheet(@PathVariable int timeSheetId) throws BusinessException {
+//    public ResponseEntity<TimeSheetDTO> deleteTimeSheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
 //        timeSheetService.deleteTimeSheet(timeSheetId);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
 
     @GetMapping("/get/{timeSheetId}")
-    public ResponseEntity<TimeSheetDTO> getTimeSheet(@PathVariable int timeSheetId) throws BusinessException {
+    public ResponseEntity<TimeSheetDTO> getTimeSheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
         return new ResponseEntity<>(timeSheetService.getTimeSheetDTO(timeSheetId), HttpStatus.OK);
     }
 
@@ -52,7 +50,7 @@ public class TimeSheetController {
     }
 
     @GetMapping("/delete/{timeSheetId}")
-    public String deleteTimesheet(@PathVariable int timeSheetId) throws BusinessException {
+    public String deleteTimesheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
         timeSheetService.deleteTimeSheet(timeSheetId);
         return "redirect:/timesheet/get-all";
     }

@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.ProjectDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,19 +23,19 @@ public class ProjectController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) throws BusinessException {
+    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) throws EntityNotFoundException {
         projectService.updateProject(projectDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{projectId}")
-    public ResponseEntity<ProjectDTO> deleteProject(@PathVariable int projectId) throws BusinessException {
+    public ResponseEntity<ProjectDTO> deleteProject(@PathVariable int projectId) throws EntityNotFoundException {
         projectService.deleteProject(projectId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get/{projectId}")
-    public ResponseEntity<ProjectDTO> getProject(@PathVariable int projectId) throws BusinessException {
+    public ResponseEntity<ProjectDTO> getProject(@PathVariable int projectId) throws EntityNotFoundException {
         return new ResponseEntity<>(projectService.getProjectDTO(projectId), HttpStatus.OK);
     }
 

@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.LanguageDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,19 +23,19 @@ public class LanguageController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<LanguageDTO> updateLanguage(@RequestBody LanguageDTO languageDTO) throws BusinessException {
+    public ResponseEntity<LanguageDTO> updateLanguage(@RequestBody LanguageDTO languageDTO) throws EntityNotFoundException {
         languageService.updateLanguage(languageDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{languageId}")
-    public ResponseEntity<LanguageDTO> deleteLanguage(@PathVariable int languageId) throws BusinessException {
+    public ResponseEntity<LanguageDTO> deleteLanguage(@PathVariable int languageId) throws EntityNotFoundException {
         languageService.deleteLanguage(languageId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get/{languageId}")
-    public ResponseEntity<LanguageDTO> getLanguage(@PathVariable int languageId) throws BusinessException {
+    public ResponseEntity<LanguageDTO> getLanguage(@PathVariable int languageId) throws EntityNotFoundException {
         return new ResponseEntity<>(languageService.getLanguageDTO(languageId), HttpStatus.OK);
     }
 }

@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.VehicleDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Vehicle;
 import com.temporary.workforce.management.repository.VehicleRepository;
 import org.modelmapper.ModelMapper;
@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +70,7 @@ public class VehicleService implements VehicleServiceInterface {
     }
 
     @Override
-    public VehicleDTO updateVehicle(VehicleDTO vehicleDTO) throws BusinessException {
+    public VehicleDTO updateVehicle(VehicleDTO vehicleDTO) throws EntityNotFoundException {
 
         logger.info("Updating vehicle {}", vehicleDTO.getId());
         Optional<Vehicle> existingVehicleOpt = vehicleRepository.findById(vehicleDTO.getId());
@@ -90,7 +88,7 @@ public class VehicleService implements VehicleServiceInterface {
     }
 
     @Override
-    public void deleteVehicle(int vehicleId) throws BusinessException {
+    public void deleteVehicle(int vehicleId) throws EntityNotFoundException {
         logger.info("Deleting vehicle");
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
         throwExceptionIfVehicleNotFound(vehicle, vehicleId);
@@ -99,7 +97,7 @@ public class VehicleService implements VehicleServiceInterface {
     }
 
     @Override
-    public Optional<Vehicle> getVehicle(int vehicleId) throws BusinessException {
+    public Optional<Vehicle> getVehicle(int vehicleId) throws EntityNotFoundException {
         logger.info("Retrieving vehicle");
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
         throwExceptionIfVehicleNotFound(vehicle, vehicleId);
@@ -107,7 +105,7 @@ public class VehicleService implements VehicleServiceInterface {
     }
 
     @Override
-    public VehicleDTO getVehicleDTO(int vehicleId) throws BusinessException {
+    public VehicleDTO getVehicleDTO(int vehicleId) throws EntityNotFoundException {
         logger.info("Retrieving vehicleDTO");
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
         throwExceptionIfVehicleNotFound(vehicle, vehicleId);
@@ -132,9 +130,9 @@ public class VehicleService implements VehicleServiceInterface {
         return vehicleDTOList;
     }
 
-    void throwExceptionIfVehicleNotFound(Optional<Vehicle> vehicle, int vehicleId) throws BusinessException {
+    void throwExceptionIfVehicleNotFound(Optional<Vehicle> vehicle, int vehicleId) throws EntityNotFoundException {
         if (vehicle.isEmpty()) {
-            throw new BusinessException("Vehicle with ID " + vehicleId + " not found");
+            throw new EntityNotFoundException("Vehicle with ID " + vehicleId + " not found");
         }
     }
 }

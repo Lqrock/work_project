@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.ProjectDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Email;
 import com.temporary.workforce.management.model.Project;
 import com.temporary.workforce.management.repository.ProjectRepository;
@@ -40,7 +40,7 @@ public class ProjectService implements ProjectServiceInterface {
     }
 
     @Override
-    public ProjectDTO updateProject(ProjectDTO projectDTO) throws BusinessException {
+    public ProjectDTO updateProject(ProjectDTO projectDTO) throws EntityNotFoundException {
         logger.info("Updating project");
         Optional<Project> existingProjectOpt = projectRepository.findById(projectDTO.getId());
         throwExceptionIfProjectNotFound(existingProjectOpt, projectDTO.getId());
@@ -63,7 +63,7 @@ public class ProjectService implements ProjectServiceInterface {
     }
 
     @Override
-    public void deleteProject(int projectId) throws BusinessException {
+    public void deleteProject(int projectId) throws EntityNotFoundException {
         logger.info("Deleting project");
         Optional<Project> project = projectRepository.findById(projectId);
         throwExceptionIfProjectNotFound(project, projectId);
@@ -72,7 +72,7 @@ public class ProjectService implements ProjectServiceInterface {
     }
 
     @Override
-    public ProjectDTO getProjectDTO(int projectId) throws BusinessException {
+    public ProjectDTO getProjectDTO(int projectId) throws EntityNotFoundException {
         logger.info("Retrieving projectDTO");
         Optional<Project> projectOpt = projectRepository.findById(projectId);
         throwExceptionIfProjectNotFound(projectOpt, projectId);
@@ -80,7 +80,7 @@ public class ProjectService implements ProjectServiceInterface {
     }
 
     @Override
-    public Optional<Project> getProject(int projectId) throws BusinessException {
+    public Optional<Project> getProject(int projectId) throws EntityNotFoundException {
         logger.info("Retrieving project");
         Optional<Project> project = projectRepository.findById(projectId);
         throwExceptionIfProjectNotFound(project, projectId);
@@ -97,9 +97,9 @@ public class ProjectService implements ProjectServiceInterface {
         return projectDTOList;
     }
 
-    void throwExceptionIfProjectNotFound(Optional<Project> project, int projectId) throws BusinessException {
+    void throwExceptionIfProjectNotFound(Optional<Project> project, int projectId) throws EntityNotFoundException {
         if (project.isEmpty()) {
-            throw new BusinessException("Project with id " + projectId + " not found");
+            throw new EntityNotFoundException("Project with id " + projectId + " not found");
         }
     }
 

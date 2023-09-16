@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.LanguageDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Language;
 import com.temporary.workforce.management.repository.LanguageRepository;
 import org.modelmapper.ModelMapper;
@@ -29,7 +29,7 @@ public class LanguageService implements LanguageServiceInterface{
     }
 
     @Override
-    public LanguageDTO updateLanguage(LanguageDTO languageDTO) throws BusinessException {
+    public LanguageDTO updateLanguage(LanguageDTO languageDTO) throws EntityNotFoundException {
         logger.info("Updating language");
         Optional<Language> existingLanguageOpt = languageRepository.findById(languageDTO.getId());
         throwExceptionIfLanguageNotFound(existingLanguageOpt, languageDTO.getId());
@@ -42,7 +42,7 @@ public class LanguageService implements LanguageServiceInterface{
     }
 
     @Override
-    public void deleteLanguage(int languageId) throws BusinessException {
+    public void deleteLanguage(int languageId) throws EntityNotFoundException {
         logger.info("Deleting language");
         Optional<Language> language = languageRepository.findById(languageId);
         throwExceptionIfLanguageNotFound(language, languageId);
@@ -50,7 +50,7 @@ public class LanguageService implements LanguageServiceInterface{
     }
 
     @Override
-    public LanguageDTO getLanguageDTO(int languageId) throws BusinessException {
+    public LanguageDTO getLanguageDTO(int languageId) throws EntityNotFoundException {
         logger.info("Retrieving language");
         Optional<Language> language = languageRepository.findById(languageId);
         throwExceptionIfLanguageNotFound(language, languageId);
@@ -59,16 +59,16 @@ public class LanguageService implements LanguageServiceInterface{
     }
 
     @Override
-    public Optional<Language> getLanguage(int languageId) throws BusinessException {
+    public Optional<Language> getLanguage(int languageId) throws EntityNotFoundException {
         logger.info("Retrieving language");
         Optional<Language> language = languageRepository.findById(languageId);
         throwExceptionIfLanguageNotFound(language, languageId);
         return language;
     }
 
-    private void throwExceptionIfLanguageNotFound(Optional<Language> language, int languageId) throws BusinessException{
+    private void throwExceptionIfLanguageNotFound(Optional<Language> language, int languageId) throws EntityNotFoundException {
         if(language.isEmpty()){
-            throw new BusinessException("Language with ID " + languageId + " not found");
+            throw new EntityNotFoundException("Language with ID " + languageId + " not found");
         }
     }
 

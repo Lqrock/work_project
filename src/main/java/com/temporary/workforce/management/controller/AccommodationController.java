@@ -1,7 +1,8 @@
 package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.AccommodationDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.error_controller.GlobalExceptionHandler;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/accommodation")
-public class AccommodationController {
+public class AccommodationController extends GlobalExceptionHandler {
 
     @Autowired
     AccommodationService accommodationService;
@@ -28,19 +29,19 @@ public class AccommodationController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodationDTO) throws BusinessException {
+    public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodationDTO) throws EntityNotFoundException {
         accommodationService.updateAccommodation(accommodationDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{accommodationId}")
-    public ResponseEntity<AccommodationDTO> deleteAccommodation(@PathVariable int accommodationId) throws BusinessException {
+    public ResponseEntity<AccommodationDTO> deleteAccommodation(@PathVariable int accommodationId) throws EntityNotFoundException {
         accommodationService.deleteAccommodation(accommodationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get/{accommodationId}")
-    public ResponseEntity<AccommodationDTO> getAccommodation(@PathVariable int accommodationId) throws BusinessException {
+    public ResponseEntity<AccommodationDTO> getAccommodation(@PathVariable int accommodationId) throws EntityNotFoundException {
         return new ResponseEntity<>(accommodationService.getAccommodationDTO(accommodationId), HttpStatus.OK);
     }
 

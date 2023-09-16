@@ -1,7 +1,7 @@
 package com.temporary.workforce.management.service;
 
 import com.temporary.workforce.management.dto.ProjectDTO;
-import com.temporary.workforce.management.exception.BusinessException;
+import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Project;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +13,13 @@ public interface ProjectServiceInterface {
 
     void createProject(ProjectDTO projectDTO);
 
-    ProjectDTO updateProject(ProjectDTO projectDTO) throws BusinessException;
+    ProjectDTO updateProject(ProjectDTO projectDTO) throws EntityNotFoundException;
 
-    void deleteProject(int projectId) throws BusinessException;
+    void deleteProject(int projectId) throws EntityNotFoundException;
 
-    ProjectDTO getProjectDTO(int projectId) throws BusinessException;
+    ProjectDTO getProjectDTO(int projectId) throws EntityNotFoundException;
 
-    Optional<Project> getProject(int projectId) throws BusinessException;
+    Optional<Project> getProject(int projectId) throws EntityNotFoundException;
 
     List<ProjectDTO> getAllProjects();
 
