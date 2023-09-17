@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,41 +32,24 @@ public class TimeSheetController {
         return new ResponseEntity<>(timeSheetService.updateTimeSheet(timeSheetDTO), HttpStatus.OK);
     }
 
-//    @DeleteMapping("/delete/{timeSheetId}")
-//    public ResponseEntity<TimeSheetDTO> deleteTimeSheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
-//        timeSheetService.deleteTimeSheet(timeSheetId);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+    @Transactional(readOnly = true)
+    @DeleteMapping("/delete/{timeSheetId}")
+    public ResponseEntity<TimeSheetDTO> deleteTimeSheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
+        timeSheetService.deleteTimeSheet(timeSheetId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{timeSheetId}")
     public ResponseEntity<TimeSheetDTO> getTimeSheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
         return new ResponseEntity<>(timeSheetService.getTimeSheetDTO(timeSheetId), HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get-all")
-    public String showAllTimeSheets(Model model) {
-        List<TimeSheetDTO> timeSheetDTOList = timeSheetService.getAllTimeSheets();
-        model.addAttribute("timeSheets", timeSheetDTOList);
-        return "show-all-timesheets";
+    public ResponseEntity<List<TimeSheetDTO>> showAllTimeSheets(Model model) {
+        return new ResponseEntity<>(timeSheetService.getAllTimeSheets(), HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{timeSheetId}")
-    public String deleteTimesheet(@PathVariable int timeSheetId) throws EntityNotFoundException {
-        timeSheetService.deleteTimeSheet(timeSheetId);
-        return "redirect:/timesheet/get-all";
-    }
-
-    @GetMapping("/register")
-    public String showVehicleForm(Model model) {
-        TimeSheetDTO timeSheetDTO = new TimeSheetDTO();
-        model.addAttribute("timesheet", timeSheetDTO);
-        return "create-timesheet";
-    }
-
-    @PostMapping("/register")
-    public String registerVehicle(Model model, @ModelAttribute("timesheet") TimeSheetDTO timeSheetDTO) throws ParseException {
-        timeSheetService.createTimeSheet(timeSheetDTO);
-        return "redirect:/timesheet/get-all";
-    }
 
 }

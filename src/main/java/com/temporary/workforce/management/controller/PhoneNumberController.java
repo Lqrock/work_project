@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -28,12 +29,14 @@ public class PhoneNumberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{phoneNumberId}")
     public ResponseEntity<PhoneNumberDTO> deletePhoneNumber(@PathVariable int phoneNumberId) throws EntityNotFoundException {
         phoneNumberService.deletePhoneNumber(phoneNumberId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{phoneNumberId}")
     public ResponseEntity<PhoneNumberDTO> getPhoneNumber(@PathVariable int phoneNumberId) throws EntityNotFoundException {
         return new ResponseEntity<>(phoneNumberService.getPhoneNumberDTO(phoneNumberId), HttpStatus.OK);

@@ -6,7 +6,10 @@ import com.temporary.workforce.management.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -27,22 +30,23 @@ public class VehicleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{vehicleId}")
     public ResponseEntity<VehicleDTO> deleteVehicle(@PathVariable int vehicleId) throws EntityNotFoundException {
         vehicleService.deleteVehicle(vehicleId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{vehicleId}")
     public ResponseEntity<VehicleDTO> getVehicle(@PathVariable int vehicleId) throws EntityNotFoundException {
         return new ResponseEntity<>(vehicleService.getVehicleDTO(vehicleId), HttpStatus.OK);
     }
 
-//    @GetMapping("/get-all")
-//    public String showAllVehicles(Model model) {
-//        List<VehicleDTO> vehicleDTOList = vehicleService.getAllAccommodations();
-//        model.addAttribute("vehicles", vehicleDTOList);
-//        return "show-all-vehicles";
-//    }
+    @Transactional(readOnly = true)
+    @GetMapping("/get-all")
+    public ResponseEntity<List<VehicleDTO>> showAllVehicles() {
+        return new ResponseEntity<>(vehicleService.getAllAccommodations(), HttpStatus.OK);
+    }
 
 }

@@ -1,15 +1,13 @@
 package com.temporary.workforce.management.dto;
 
-import com.temporary.workforce.management.model.Employee;
 import com.temporary.workforce.management.model.OwnershipType;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 public class AccommodationDTO {
 
     private int id; //
@@ -52,6 +50,6 @@ public class AccommodationDTO {
 
     private List<FurnitureDTO> furniture;
 
-//    private File contractFile; TODO learn
+    //    private File contractFile; TODO learn
 
 }

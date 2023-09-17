@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -28,23 +31,24 @@ public class ProjectController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{projectId}")
     public ResponseEntity<ProjectDTO> deleteProject(@PathVariable int projectId) throws EntityNotFoundException {
         projectService.deleteProject(projectId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{projectId}")
     public ResponseEntity<ProjectDTO> getProject(@PathVariable int projectId) throws EntityNotFoundException {
         return new ResponseEntity<>(projectService.getProjectDTO(projectId), HttpStatus.OK);
     }
 
-//    @GetMapping("/get-all")
-//    public String showAllProjects(Model model) {
-//        List<ProjectDTO> projectDTOList = projectService.getAllProjects();
-//        model.addAttribute("projects", projectDTOList);
-//        return "show-all-projects";
-//    }
+    @Transactional(readOnly = true)
+    @GetMapping("/get-all")
+    public ResponseEntity<List<ProjectDTO>> showAllProjects() {
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
+    }
 
 
 

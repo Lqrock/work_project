@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -28,12 +29,14 @@ public class EmailController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{emailId}")
     public ResponseEntity<EmailDTO> deleteEmail(@PathVariable int emailId) throws EntityNotFoundException {
         emailService.deleteEmail(emailId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{emailId}")
     public ResponseEntity<EmailDTO> getEmail(@PathVariable int emailId) throws EntityNotFoundException {
         return new ResponseEntity<>(emailService.getEmailDTO(emailId), HttpStatus.OK);

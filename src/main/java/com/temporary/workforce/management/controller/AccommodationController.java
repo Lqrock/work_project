@@ -4,13 +4,15 @@ import com.temporary.workforce.management.dto.AccommodationDTO;
 import com.temporary.workforce.management.error_controller.GlobalExceptionHandler;
 import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.service.AccommodationService;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller
@@ -21,7 +23,6 @@ public class AccommodationController extends GlobalExceptionHandler {
     AccommodationService accommodationService;
 
 
-    @Transactional
     @PostMapping("/create")
     public ResponseEntity<AccommodationDTO> createAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
         accommodationService.createAccommodation(accommodationDTO);
@@ -34,17 +35,21 @@ public class AccommodationController extends GlobalExceptionHandler {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{accommodationId}")
     public ResponseEntity<AccommodationDTO> deleteAccommodation(@PathVariable int accommodationId) throws EntityNotFoundException {
         accommodationService.deleteAccommodation(accommodationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
+    @Transactional(readOnly = true)
     @GetMapping("/get/{accommodationId}")
     public ResponseEntity<AccommodationDTO> getAccommodation(@PathVariable int accommodationId) throws EntityNotFoundException {
         return new ResponseEntity<>(accommodationService.getAccommodationDTO(accommodationId), HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get-all")
     public ResponseEntity<List<AccommodationDTO>> showAllAccommodations() {
         List<AccommodationDTO> accommodationDTOList = accommodationService.getAllAccommodations();

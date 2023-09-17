@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,17 +31,20 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{employeeId}")
     public ResponseEntity<EmployeeDTO> deleteEmployee(@PathVariable int employeeId) throws EntityNotFoundException {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{employeeId}")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable int employeeId) throws EntityNotFoundException {
         return new ResponseEntity<>(employeeService.getEmployeeDTO(employeeId), HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get-all")
     public ResponseEntity<List<EmployeeDTO>> showAllEmployees() {
         List<EmployeeDTO> employeeDTOList = employeeService.getAllAccommodations();

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -28,12 +29,14 @@ public class LanguageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @DeleteMapping("/delete/{languageId}")
     public ResponseEntity<LanguageDTO> deleteLanguage(@PathVariable int languageId) throws EntityNotFoundException {
         languageService.deleteLanguage(languageId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/get/{languageId}")
     public ResponseEntity<LanguageDTO> getLanguage(@PathVariable int languageId) throws EntityNotFoundException {
         return new ResponseEntity<>(languageService.getLanguageDTO(languageId), HttpStatus.OK);
