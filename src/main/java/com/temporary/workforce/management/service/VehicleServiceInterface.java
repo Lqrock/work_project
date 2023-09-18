@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public interface VehicleServiceInterface {
-
     void createVehicle(VehicleDTO vehicleDTO);
 
     VehicleDTO updateVehicle(VehicleDTO vehicleDTO) throws EntityNotFoundException;

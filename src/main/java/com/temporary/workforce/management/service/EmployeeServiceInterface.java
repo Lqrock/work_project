@@ -11,6 +11,8 @@ import java.util.Optional;
 @Service
 public interface EmployeeServiceInterface {
 
+    EmployeeDTO getEmployeeByEmail(String employeeEmail) throws EntityNotFoundException;
+
     void createEmployee(EmployeeDTO employeeDTO);
 
     EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) throws EntityNotFoundException;

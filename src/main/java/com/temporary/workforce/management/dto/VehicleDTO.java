@@ -1,5 +1,6 @@
 package com.temporary.workforce.management.dto;
 
+import com.temporary.workforce.management.model.Brand;
 import com.temporary.workforce.management.model.DkvNumber;
 import com.temporary.workforce.management.model.TireType;
 import com.temporary.workforce.management.model.VehicleOwner;
@@ -14,7 +15,7 @@ public class VehicleDTO {
 
     private int id;
 
-    private String brand;
+    private Brand brand;
 
     private String model;
 

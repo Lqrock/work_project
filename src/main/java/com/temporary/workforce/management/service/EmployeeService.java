@@ -28,6 +28,7 @@ public class EmployeeService implements EmployeeServiceInterface {
 
     Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
+
     @Override
     public void createEmployee(EmployeeDTO employeeDTO) {
         logger.info("Starting employee creation");
@@ -65,11 +66,10 @@ public class EmployeeService implements EmployeeServiceInterface {
             employee.getAccommodation().getUtilities().forEach(utility -> utility.setAccommodation(employee.getAccommodation()));
             employee.getAccommodation().getFloors().forEach(floor -> floor.getRooms().forEach(room -> room.setFloor(floor)));
             employee.getAccommodation().getFurniture().forEach(furniture -> furniture.setAccommodation(employee.getAccommodation()));
-            employee.getAccommodation().getFloors().forEach(floor -> floor.getRooms().forEach(
-                    room -> room.getFurniture().forEach(furniture -> {
-                        furniture.setRoom(room);
-                        furniture.setAccommodation(employee.getAccommodation());
-                    })));
+            employee.getAccommodation().getFloors().forEach(floor -> floor.getRooms().forEach(room -> room.getFurniture().forEach(furniture -> {
+                furniture.setRoom(room);
+                furniture.setAccommodation(employee.getAccommodation());
+            })));
         }
 
 
@@ -139,6 +139,14 @@ public class EmployeeService implements EmployeeServiceInterface {
         return employee;
     }
 
+
+    public EmployeeDTO getEmployeeByEmail(String employeeEmail) throws EntityNotFoundException {
+        logger.info("Retrieving employeeDTO by email");
+        Optional<Employee> employee = employeeRepository.findByEmailIgnoreCase(employeeEmail);
+        throwExceptionIfEmployeeNotFound(employee, employeeEmail);
+        return modelMapper.map(employee, EmployeeDTO.class);
+    }
+
     @Override
     public List<EmployeeDTO> getAllAccommodations() {
         List<Employee> employees = employeeRepository.findAll();
@@ -152,6 +160,11 @@ public class EmployeeService implements EmployeeServiceInterface {
     public void throwExceptionIfEmployeeNotFound(Optional<Employee> employee, int employeeId) throws EntityNotFoundException {
         if (employee.isEmpty()) {
             throw new EntityNotFoundException("Employee with ID " + employeeId + " not found");
+        }
+    }
+    public void throwExceptionIfEmployeeNotFound(Optional<Employee> employee, String employeeEmail) throws EntityNotFoundException {
+        if (employee.isEmpty()) {
+            throw new EntityNotFoundException("Employee with Email " + employeeEmail + " not found");
         }
     }
 

@@ -2,6 +2,7 @@ package com.temporary.workforce.management.controller;
 
 import com.temporary.workforce.management.dto.EmployeeDTO;
 import com.temporary.workforce.management.exception.EntityNotFoundException;
+import com.temporary.workforce.management.model.Employee;
 import com.temporary.workforce.management.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,12 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDTO>> showAllEmployees() {
         List<EmployeeDTO> employeeDTOList = employeeService.getAllAccommodations();
         return new ResponseEntity<>(employeeDTOList, HttpStatus.OK);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/get-by-email")
+    public ResponseEntity<EmployeeDTO> getEmployeeByEmail(@RequestParam String email) throws EntityNotFoundException {
+        return new ResponseEntity<>(employeeService.getEmployeeByEmail(email), HttpStatus.OK);
     }
 
 }

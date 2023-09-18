@@ -12,5 +12,8 @@ public class TemporaryWorkforceManagementApplication{
 	public static void main(String[] args) {
 		SpringApplication.run(TemporaryWorkforceManagementApplication.class, args);
 
+
 	}
+
+
 }

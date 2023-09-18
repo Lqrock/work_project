@@ -21,9 +21,13 @@ public class Vehicle {
     @Column(name = "model")
     private String model;
 
-    @NotEmpty
+    @Enumerated(EnumType.STRING)
     @Column(name = "brand")
-    private String brand;
+    private Brand brand;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dkv_number")
+    private DkvNumber dkvNumber;
 
     @NotEmpty
     @Column(name = "plate_number")
@@ -42,10 +46,6 @@ public class Vehicle {
     @NotEmpty
     @Column(name = "insurance_type")
     private String insuranceType;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "dkv_number")
-    private DkvNumber dkvNumber;
 
     @NotEmpty
     @Column(name = "gps_number")
