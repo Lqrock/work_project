@@ -3,6 +3,7 @@ package com.temporary.workforce.management.service;
 import com.temporary.workforce.management.dto.AccommodationDTO;
 import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Accommodation;
+import com.temporary.workforce.management.model.OwnershipType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.Optional;
 
 @Service
 public interface AccommodationServiceInterface {
+
+    List<AccommodationDTO> getAccommodationsDTOByOwnershipType(OwnershipType ownershipType) throws EntityNotFoundException;
 
     void createAccommodation(AccommodationDTO accommodationDTO);
 

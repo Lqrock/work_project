@@ -3,6 +3,7 @@ package com.temporary.workforce.management.service;
 import com.temporary.workforce.management.dto.AccommodationDTO;
 import com.temporary.workforce.management.exception.EntityNotFoundException;
 import com.temporary.workforce.management.model.Accommodation;
+import com.temporary.workforce.management.model.OwnershipType;
 import com.temporary.workforce.management.model.Room;
 import com.temporary.workforce.management.repository.AccommodationRepository;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,17 +25,26 @@ public class AccommodationService implements AccommodationServiceInterface {
     ModelMapper modelMapper = new ModelMapper();
     Logger logger = LoggerFactory.getLogger(AccommodationService.class);
 
+
+    @Override
+    public List<AccommodationDTO> getAccommodationsDTOByOwnershipType(OwnershipType ownershipType) throws EntityNotFoundException {
+        List<Accommodation> accommodations = accommodationRepository.findByOwnershipType(ownershipType);
+        List<AccommodationDTO> accommodationDTOList = new ArrayList<>();
+        accommodations.forEach(accommodation -> accommodationDTOList.add(modelMapper.map(accommodation, AccommodationDTO.class)));
+        return accommodationDTOList;
+    }
+
     @Override
     public void createAccommodation(AccommodationDTO accommodationDTO) {
 
         logger.info("Starting accommodation creation");
         Accommodation accommodation = modelMapper.map(accommodationDTO, Accommodation.class);
-        if ( accommodation.getFloors() != null) {
+        if (accommodation.getFloors() != null) {
             accommodation.getFloors().forEach(floor -> {
                 floor.setAccommodation(accommodation);
                 if (floor.getRooms() != null) {
                     floor.getRooms().forEach(room -> room.setFloor(floor));
-                    for (Room room:floor.getRooms()){
+                    for (Room room : floor.getRooms()) {
                         if (room.getFurniture() != null) {
                             room.getFurniture().forEach(furniture -> furniture.setRoom(room));
                             room.getFurniture().forEach(furniture -> furniture.setAccommodation(accommodation));
