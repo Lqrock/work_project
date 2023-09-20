@@ -27,6 +27,11 @@ public class AccommodationService implements AccommodationServiceInterface {
 
 
     @Override
+    public void deleteAllAccommodations() {
+        accommodationRepository.deleteAll();
+    }
+
+    @Override
     public List<AccommodationDTO> getAccommodationsDTOByOwnershipType(OwnershipType ownershipType) throws EntityNotFoundException {
         List<Accommodation> accommodations = accommodationRepository.findByOwnershipType(ownershipType);
         List<AccommodationDTO> accommodationDTOList = new ArrayList<>();

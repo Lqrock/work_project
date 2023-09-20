@@ -12,6 +12,8 @@ import java.util.Optional;
 @Service
 public interface AccommodationServiceInterface {
 
+    void deleteAllAccommodations();
+
     List<AccommodationDTO> getAccommodationsDTOByOwnershipType(OwnershipType ownershipType) throws EntityNotFoundException;
 
     void createAccommodation(AccommodationDTO accommodationDTO);

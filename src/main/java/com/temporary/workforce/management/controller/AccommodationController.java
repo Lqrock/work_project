@@ -3,6 +3,7 @@ package com.temporary.workforce.management.controller;
 import com.temporary.workforce.management.dto.AccommodationDTO;
 import com.temporary.workforce.management.error_controller.GlobalExceptionHandler;
 import com.temporary.workforce.management.exception.EntityNotFoundException;
+import com.temporary.workforce.management.model.Accommodation;
 import com.temporary.workforce.management.model.OwnershipType;
 import com.temporary.workforce.management.service.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,11 @@ public class AccommodationController extends GlobalExceptionHandler {
     @GetMapping("/get-by-ownership-type/{ownershipType}")
     public ResponseEntity<List<AccommodationDTO>> getAccommodationByOwnershipType(@PathVariable OwnershipType ownershipType) throws EntityNotFoundException {
         return new ResponseEntity<>(accommodationService.getAccommodationsDTOByOwnershipType(ownershipType), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<Accommodation> deleteAllAccommodations() {
+        accommodationService.deleteAllAccommodations();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
